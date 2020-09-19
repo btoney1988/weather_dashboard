@@ -32,8 +32,13 @@ $("#searchBtn").on("click", function () {
     .then(function (response) {
       console.log(response)
 
-      // var tempF = (response.main.temp - 273.15) * 1.80 + 32;
+      var tempF = (response.main.temp - 273.15) * 1.80 + 32;
 
+      function makeList() {
+        var listItem = $("<li>").addClass("list-group-item").text(response.name);
+        $(".list").append(listItem);
+      }
+      
       getCurrentConditions(response);
       getCurrentForecast(response);
       makeList();
@@ -41,10 +46,7 @@ $("#searchBtn").on("click", function () {
     })
 });
 
-function makeList() {
-  var listItem = $("<li>").addClass("list-group-item").text(city);
-  $(".list").append(listItem);
-}
+
 
 function getCurrentConditions(response) {
 
@@ -103,11 +105,11 @@ function getCurrentForecast() {
     //have end date, endDate = startDate + 5
 
     for (var i = 0; i < results.length; i++) {
-
-      var day = Number(results[i].dt_txt.split('-')[2].split(' ')[0]);
+      var month = results[i].dt_txt.split('-')[1].split(' ')[0]
+      var day = results[i].dt_txt.split('-')[2].split(' ')[0];
       var hour = results[i].dt_txt.split('-')[2].split(' ')[1];
-      // console.log(day);
-      // console.log(hour);
+      var year = moment().format('YYYY')
+      console.log(hour);
 
       if (results[i].dt_txt.indexOf("12:00:00") !== -1) {
 
@@ -117,7 +119,7 @@ function getCurrentForecast() {
 
         var card = $("<div>").addClass("card col-md-2 ml-4 bg-primary text-white");
         var cardBody = $("<div>").addClass("card-body p-3 forecastBody")
-        var cityDate = $("<h6>").addClass("card-title").text(date.toLocaleDateString('en-US'));
+        var cityDate = $("<h6>").addClass("card-title").text(month + "/" + day + "/" + year);
         var temperature = $("<p>").addClass("card-text forecastTemp").text("Temperature: " + tempF + " °F");
         var humidity = $("<p>").addClass("card-text forecastHumidity").text("Humidity: " + results[i].main.humidity + "%");
         var image = $("<img>").attr("src", "https://openweathermap.org/img/w/" + results[i].weather[0].icon + ".png")

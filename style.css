@@ -1,4 +1,7 @@
 /* Footer adjustments */
+main{
+  margin-bottom: 80px;
+}
 .footer {
   margin-top: 4%;
   height: 60px;
