@@ -3,6 +3,13 @@ var city = $("#searchTerm").val();
 var apiKey = "&appid=0bf45eff92e1a09c8f83f6dc4844161d";
 var date = new Date();
 
+var cityName = localStorage.getItem('cityName');
+
+
+if (cityName !== null) {
+  city = cityName;
+}
+
 $("#forecastH5").hide();
 // Making sure there is something in the city input
 $("#searchTerm").keypress(function (event) {
@@ -14,7 +21,7 @@ $("#searchTerm").keypress(function (event) {
 
 $("#searchBtn").on("click", function () {
 
-  $("#forecastH5").show();
+  console.log(city);
 
   // get the value of the input from user
   city = $("#searchTerm").val();
@@ -32,18 +39,29 @@ $("#searchBtn").on("click", function () {
     .then(function (response) {
       console.log(response)
 
-      var tempF = (response.main.temp - 273.15) * 1.80 + 32;
+      city = response.name;
+
+      var name = localStorage.getItem("cityName");
+      var cityName = [];
+      if(name){
+          cityName = JSON.parse(name);  
+      }
+      cityName.push(city);
+      localStorage.setItem("cityName",JSON.stringify(cityName));
+
 
       function makeList() {
         var listItem = $("<li>").addClass("list-group-item").text(response.name);
+
         $(".list").append(listItem);
       }
-      
+
       getCurrentConditions(response);
       getCurrentForecast(response);
       makeList();
 
     })
+
 });
 
 
@@ -72,7 +90,7 @@ function getCurrentConditions(response) {
     $.ajax({
       url: uvIdxUrl,
       method: 'GET'
-    }).then(function(response) {
+    }).then(function (response) {
       // console.log(response.value);
       $('.uvIdx').text(' UV Index: ' + response.value);
     });
@@ -86,7 +104,7 @@ function getCurrentConditions(response) {
 }
 
 function getCurrentForecast() {
-
+  $("#forecastH5").show();
   $.ajax({
     url: "https://api.openweathermap.org/data/2.5/forecast?q=" + city + apiKey,
     method: "GET"
@@ -98,7 +116,7 @@ function getCurrentForecast() {
 
     // variable to hold response.list
     var results = response.list;
-    console.log(results)
+    // console.log(results)
 
     //declare start date to check against
     // startDate = 20
@@ -109,7 +127,7 @@ function getCurrentForecast() {
       var day = results[i].dt_txt.split('-')[2].split(' ')[0];
       var hour = results[i].dt_txt.split('-')[2].split(' ')[1];
       var year = moment().format('YYYY')
-      console.log(hour);
+      // console.log(hour);
 
       if (results[i].dt_txt.indexOf("12:00:00") !== -1) {
 
