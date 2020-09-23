@@ -12,5 +12,6 @@ main {
 span{
   color: white;
   font-size: larger;
+  padding: 5px;
 }
 

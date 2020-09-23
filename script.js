@@ -22,7 +22,7 @@ function makeList(city, i) {
   cityListItem.attr("value", i);
   cityListItem.text(city);
   // Append the searched city to the city list
-  $(".list").append(cityListItem);
+  $(".list").prepend(cityListItem);
 }
 
 // Function to  make the list for the Cities that were previously searched for
@@ -136,7 +136,8 @@ function getForecast(city) {
     }
   });
 }
-// Get weather function 
+
+// Get weather function and pulling it all together 
 function getWeather(city) {
   // URL to call API
   var queryUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + apiKey;
