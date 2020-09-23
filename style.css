@@ -8,15 +8,9 @@ main {
   line-height: 60px;
 }
 
-.fa-trash {
-  float: right;  
-}
-
-.btn:hover {
-  text-decoration: none;
-}
-
+/* Small adjustment to color UV Index number */
 span{
   color: white;
   font-size: larger;
 }
+
