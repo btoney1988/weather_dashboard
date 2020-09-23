@@ -12,21 +12,11 @@ main {
   float: right;  
 }
 
-.fa:hover {
+.btn:hover {
+  text-decoration: none;
+}
+
+span{
+  color: white;
   font-size: larger;
-}
-
-#uviButton[disabled] { 
-  pointer-events: none;
-
-}
-
-.orange {
-  background-color: rgb(170, 116, 0);
-  border-color: rgb(170, 116, 0);
-}
-
-.purple {
-  background-color: purple;
-  border-color: purple;
 }

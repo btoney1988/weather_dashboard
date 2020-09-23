@@ -12,7 +12,7 @@ function makeList(city, i) {
   cityListItem.attr("value", i)
   cityListItem.text(city);
   cityListItem.append('<i class="fa fa-trash" aria-hidden="true"></i>');
-  
+
   $(".list").append(cityListItem);
 }
 
@@ -53,31 +53,25 @@ function getCurrentConditions(response) {
       method: 'GET'
     }).then(function (response) {
       var uviClass = $(".uvIdx");
-      var uvi = response.value;
-      var uviButton = $("<button>").attr("id", "uviButton");
-      uviClass.text(' UV Index: ');
-      uviButton.text(uvi);
-      
+      var uvi = response.value
+      var uviSpan = "<span id='uvi'>" + uvi + "</span>";
+      uviClass.append("<p> UV Index:   " + uviSpan);
 
-      if(uvi < 3){
-        uviButton.addClass("btn btn-success");
-        uviClass.append(uviButton);
+      if (uvi < 3) {
+        $("#uvi").attr("style", "background-color: green;")
+
+      } else if (uvi < 6) {
+        $("#uvi").attr("style", "background-color: yellow; color: black;")
+      } else if (uvi < 8) {
+        $("#uvi").attr("style", "background-color: orange; color: black;")
+        // uviSpan.attr("style", "color:white;")
+      } else if (uvi < 11) {
+        $("#uvi").attr("style", "background-color: red;")
+        // uviSpan.attr("style", "color:white;")
+      } else if (11 <= uvi) {
+        $("#uvi").attr("style", "background-color: purple;")
+        // uviSpan.attr("style", "color:white;")
       }
-      if(3 <= uvi < 6){
-        uviButton.addClass("btn btn-warning");
-        uviClass.append(uviButton);
-      }
-      if(6 <= uvi < 8){
-        uviButton.addClass("btn btn-success orange");
-        uviClass.append(uviButton);
-      }
-      if(8 <= uvi < 11){
-        uviButton.addClass("btn btn-danger");
-        uviClass.append(uviButton);
-      }
-      if(11 <= uvi){
-        uviButton.addClass("btn btn-dark purple");
-        uviClass.append(uviButton);      }
     });
   }
   getuvIdx();
@@ -184,21 +178,21 @@ $("#searchBtn").on("click", function (event) {
       if (name) {
         cityName = JSON.parse(name);
       }
-      var found = cityName.find(function(element){
-        return(element === city)
+      var found = cityName.find(function (element) {
+        return (element === city)
       });
       console.log(found);
-      if (!found){
+      if (!found) {
         cityName.push(city);
         var index = $("#searchTerm").attr('save-id');
 
         var inputId = '#input-' + index;
         var value = $(inputId).val();
-  
+
         cityName[index] = value;
-  
-        
-  
+
+
+
         localStorage.setItem("cityName", JSON.stringify(cityName));
         makeList(city);
       }
