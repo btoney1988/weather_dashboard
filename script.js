@@ -19,7 +19,6 @@ $("#searchTerm").keypress(function (event) {
 // Function to make a list of the cities
 function makeList(city, i) {
   var cityListItem = $("<button>").addClass("list-group-item list-group-item-action savedCities");
-  cityListItem.attr("value", i);
   cityListItem.text(city);
   // Append the searched city to the city list
   $(".list").prepend(cityListItem);
